@@ -1,7 +1,0 @@
-[package]
-name = "GROW"
-version = "0.1.0"
-edition = "2021"
-
-[dependencies]
-whoami = "1.5.2"
