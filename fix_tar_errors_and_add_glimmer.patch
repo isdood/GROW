@@ -1,0 +1,116 @@
+--- a/CORE/install.sh
++++ b/CORE/install.sh
+@@ -1,10 +1,11 @@
+ #!/bin/bash
++# ✨STARWEAVE✨ - Your guide to the cosmos of installation!
+ 
+ # ANSI color codes for prettier output
+ GREEN='\033[0;32m'
+ BLUE='\033[0;34m'
+ RED='\033[0;31m'
++GLIMMER='\033[1;33m' # ✨ A touch of glimmer ✨
+ NC='\033[0m' # No Color
+ PURPLE='\033[0;35m'
+ 
+@@ -69,7 +70,7 @@
+ download_arch() {
+     local arch_url="http://os.archlinuxarm.org/os/ArchLinuxARM-am33x-latest.tar.gz"
+     local download_path="/tmp/arch-arm.tar.gz"
+-    
++
+     if [ -f "$download_path" ]; then
+         print_status "Existing Arch Linux ARM download found. Would you like to download fresh? [y/N]: "
+         read -r redownload
+@@ -79,13 +80,13 @@
+             return
+         fi
+     fi
+-    
++
+     print_status "Downloading latest Arch Linux ARM..."
+     wget "$arch_url" -O "$download_path" || {
+         print_error "Failed to download Arch Linux ARM"
+         exit 1
+     }
+-    print_success "Download complete"
++    print_success "Download complete ✨"
+ }
+ 
+ # Function to list and select available drives
+@@ -93,10 +94,10 @@
+     print_header "Available Drives"
+     lsblk -d -o NAME,SIZE,TYPE,MODEL
+     
+-    while true; do
++    while true; do # ✨ Looping through the cosmos of drives ✨
+         echo
+         print_status "Enter the device name to install to (e.g., sdb, mmcblk0): "
+-        read -r selected_drive
++        read -r selected_drive # ✨ Reading your cosmic choice ✨
+         
+         if [[ -b "/dev/$selected_drive" ]]; then
+             print_status "You selected /dev/$selected_drive"
+@@ -109,7 +110,7 @@
+             print_error "Invalid device. Please try again."
+         fi
+     done
+-    
++
+     SELECTED_DRIVE="/dev/$selected_drive"
+ }
+ 
+@@ -117,22 +118,22 @@
+ prepare_drive() {
+     local drive=$1
+     
+-    print_header "Preparing Drive"
++    print_header "Preparing Drive ✨"
+     
+     # Create partition table and partitions
+-    print_status "Creating partitions..."
++    print_status "Creating partitions... ✨"
+     
+     # Create new partition table
+     parted "$drive" mklabel msdos
+     
+     # Create boot partition (100MB)
+     parted "$drive" mkpart primary fat32 1MiB 100MiB
+-    
++
+     # Create root partition (rest of the space)
+     parted "$drive" mkpart primary ext4 100MiB 100%
+     
+     # Format partitions
+-    mkfs.vfat "${drive}1"
++    mkfs.vfat "${drive}1" # ✨ Formatting the boot partition ✨
+     mkfs.ext4 "${drive}2"
+     
+     print_success "Drive prepared successfully"
+@@ -153,14 +154,14 @@
+     mount "${drive}2" /mnt/arch
+     mount "${drive}1" /mnt/arch/boot
+     
+-    print_success "Partitions mounted"
++    print_success "Partitions mounted ✨"
+ }
+ 
+ # Function to extract Arch Linux
+ extract_arch() {
+-    print_header "Extracting Arch Linux"
++    print_header "Extracting Arch Linux ✨"
+     
+     cd /mnt/arch || exit 1
+-    tar xf /tmp/arch-arm.tar.gz
++    tar xf /tmp/arch-arm.tar.gz --no-xattrs # ✨ Ignoring those pesky SMACK attributes ✨
+     
+     print_success "Extraction complete"
+ }
+@@ -196,7 +197,7 @@
+     download_arch
+     select_drive
+     prepare_drive "$SELECTED_DRIVE"
+-    mount_partitions "$SELECTED_DRIVE"
++    mount_partitions "$SELECTED_DRIVE" # ✨ Mounting the cosmos ✨
+     extract_arch
+     setup_emmc_install
+     
