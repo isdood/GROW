@@ -25,7 +25,7 @@ function print_success
     set_color $NC
     echo " " $argv
     set_color $GLIMMER
-    echo -n "✨"
+    echo -n " ✨" # ✨ GLIMMER! ✨
     set_color $NC
     echo
 end
@@ -41,14 +41,14 @@ end
 if not test -f fix_tar_errors_and_add_glimmer.patch
     print_error "Patch file 'fix_tar_errors_and_add_glimmer.patch' not found. Please ensure the patch file is in the same directory as this script."
     set_color $GLIMMER
-    echo "✨"
+    echo " ✨" # ✨ GLIMMER! ✨
     set_color $NC
     exit 1
 end
 
 # Apply the patch - ✨ GLIMMER ADDED ✨
 print_status "Applying the patch to CORE/install.sh..."
-patch < fix_tar_errors_and_add_glimmer.patch
+patch -p1 < fix_tar_errors_and_add_glimmer.patch # ✨ Added -p1 option! ✨
 
 if test $status -eq 0
     print_success "Patch applied successfully!"
